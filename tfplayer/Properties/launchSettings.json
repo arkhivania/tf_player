@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "tfplayer": {
+      "commandName": "Project",
+      "commandLineArgs": "\"-1_-4_2_img.png\" out.txt -m head_to_mni.pb -p x -r Identity",
+      "workingDirectory": "C:\\Development\\dev_git\\tf_player\\sample_models\\head_to_mni"
+    }
+  }
+}
