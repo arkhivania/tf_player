@@ -12,11 +12,8 @@ namespace tfplayer
 {
     public class Options
     {
-        [Value(0)]
+        [Value(0, HelpText = "Input data, it can be PNG image now only")]
         public string Input { get; set; }
-
-        [Value(1)]
-        public string Output { get; set; }
 
         [Option('m', "model", Required = true, Default = "", HelpText = "path to model file")]
         public string Model { get; set; }
@@ -32,6 +29,10 @@ namespace tfplayer
 
         [Option('v', "verbose", Required = false, Default = false, HelpText = "verbose info")]
         public bool Verbose { get; set; }
+
+
+        [Option('o', "output", Required = true, Default = "", HelpText = "Output data file")]
+        public string Output { get; set; }
     }
 
     class Program
@@ -82,8 +83,11 @@ namespace tfplayer
                         var output = runner.Run();
                         var result = output[0];
                         var r_v = (float[][])result.GetValue(true);
-                        foreach (var v in r_v[0])
-                            Console.WriteLine(v.ToString(CultureInfo.InvariantCulture));
+
+                        if (o.Output.EndsWith(".txt"))
+                            using (var f = new StreamWriter(o.Output, false))
+                                foreach (var v in r_v[0])
+                                    f.WriteLine(v.ToString(CultureInfo.InvariantCulture));
                     }
                 }
             }
